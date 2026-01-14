@@ -1,0 +1,16 @@
+README.md
+pyproject.toml
+cfe_framework/__init__.py
+cfe_framework/main.py
+cfe_framework/serializer.py
+cfe_framework/utils.py
+cfe_framework.egg-info/PKG-INFO
+cfe_framework.egg-info/SOURCES.txt
+cfe_framework.egg-info/dependency_links.txt
+cfe_framework.egg-info/top_level.txt
+cfe_framework/mdclasses/commonmodule.py
+cfe_framework/mdclasses/configuration.py
+cfe_framework/mdclasses/generated_type.py
+cfe_framework/mdclasses/language.py
+cfe_framework/mdclasses/metadataobject.py
+cfe_framework/mdclasses/role.py

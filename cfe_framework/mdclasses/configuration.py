@@ -1,10 +1,10 @@
-from mdclasses.metadataobject import MetaDataObject
-from mdclasses.language import Language
-from mdclasses.role import Role
+from .metadataobject import MetaDataObject
+from .language import Language
+from .role import Role
 
 from enum import Enum
 
-import utils
+import cfe_framework.utils as utils
 import xml.etree.ElementTree as ET
 import uuid
 

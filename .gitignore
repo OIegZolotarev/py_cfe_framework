@@ -1,2 +1,5 @@
 *.pyc
 sandbox/*
+__pycache__/*
+.vscode/*
+build/*

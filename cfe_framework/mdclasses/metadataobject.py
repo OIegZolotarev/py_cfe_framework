@@ -1,5 +1,5 @@
 import uuid
-import utils
+import cfe_framework.utils as utils
 
 import xml.etree.ElementTree as ET
 

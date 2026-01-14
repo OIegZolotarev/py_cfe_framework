@@ -1,6 +1,6 @@
-import utils
+import cfe_framework.utils as utils
 import xml.etree.ElementTree as ET
-from mdclasses.metadataobject import MetaDataObject
+from .metadataobject import MetaDataObject
 from enum import Enum
 
 class ReturnValuesReuse(Enum):
