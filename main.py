@@ -1,6 +1,4 @@
-import utils
-import uuid
-import serializer
+import zipfile
 from mdclasses.configuration import Configuration, ConfigurationExtensionCompatibilityMode
 
 
@@ -12,7 +10,10 @@ test.setLanguage(langName="Русский", langCode="ru")
 test.setMainRole(roleName="ЦАУ_ОсновнаяРоль")
 test.ConfigurationExtensionCompatibilityMode = ConfigurationExtensionCompatibilityMode.Version8_3_27
 
-test.serialize('sandbox')
+z = zipfile.ZipFile("test.zip", 'w')
+test.serialize(z)
+
+z.close()
 
 
 pass

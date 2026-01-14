@@ -28,18 +28,18 @@ class Role(MetaDataObject):
 
     def serialize(self, outputDirectory):
 
-        mdDescriptionFile = f'{outputDirectory}/Roles/{self.Name}.xml'
+        mdDescriptionFile = f'Roles/{self.Name}.xml'
         mdDescriptionText = self.makeRoleXML()
 
-        utils.saveText(mdDescriptionText, mdDescriptionFile)
+        utils.saveText(mdDescriptionText, outputDirectory, mdDescriptionFile)
 
         if len(self.Rights) > 0:
             
-            rightsFile = f'{outputDirectory}/Roles/{self.Name}/rights.xml'
+            rightsFile = f'Roles/{self.Name}/rights.xml'
 
             rightsText = '' # TODO
 
-            utils.saveText(rightsText, rightsFile)
+            utils.saveText(rightsText, outputDirectory, rightsFile)
 
 
         pass

@@ -197,9 +197,7 @@ class Configuration(MetaDataObject):
         # Child object end
     
         metaDataObjectNode.append(configurationNode)
-    
-    
-    
+   
         return utils.writeDocumentToString(metaDataObjectNode, True)
         
         
@@ -207,7 +205,7 @@ class Configuration(MetaDataObject):
     def serialize(self, outputDirectory):
         
         configurationXML = self.makeConfigurationXML()            
-        utils.saveText(configurationXML, f"{outputDirectory}/Configuration.xml")
+        utils.saveText(configurationXML, outputDirectory, "Configuration.xml")
         
         # TODO: Так ли нужен ConfigDumpInfo.xml ? Без него вполне неплохо работает на объемах расширения
 

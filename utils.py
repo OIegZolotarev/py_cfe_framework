@@ -1,6 +1,7 @@
 import uuid
 import xml.etree.ElementTree as ET
 import os
+import zipfile
 from enum import Enum
 
 FORMAT_VERISON = "2.11"
@@ -176,7 +177,7 @@ def makeDescriptionFromName(name: str) -> str:
         
         # Определяем, нужно ли начинать новое слово
         is_new_word = (
-            char.isupper() and not char.isdigit()  # переход в CamelCase
+            char.isupper() and not char.isupper() and not char.isdigit()  # переход в CamelCase
             or char.isupper() and prev_char.islower()  # Заглавная после строчной
             or char.isdigit() and not prev_char.isdigit()  # Цифра после буквы
             or not char.isdigit() and prev_char.isdigit()  # Буква после цифры
@@ -255,12 +256,21 @@ def initLangData(name : str, code: str):
     
     return result
 
-def saveText(text, filepath):
+def saveText(text, directoryOrArchive, filepath):
     
-    dir_path = os.path.dirname(os.path.abspath(filepath))
-    if dir_path:
-        os.makedirs(dir_path, exist_ok=True)
+    if type(directoryOrArchive) == str:
         
-    f = open(filepath, "wb")
-    f.write(text)
-    f.close()
+        fullPath = directoryOrArchive + '/' + filepath
+
+        dir_path = os.path.dirname(os.path.abspath(fullPath))
+        if dir_path:
+            os.makedirs(dir_path, exist_ok=True)
+            
+        f = open(fullPath, "wb")
+        f.write(text)
+        f.close()
+
+    elif type(directoryOrArchive) == zipfile.ZipFile:
+
+        directoryOrArchive.writestr(filepath, text)
+

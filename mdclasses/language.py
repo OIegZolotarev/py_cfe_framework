@@ -11,9 +11,9 @@ class Language(MetaDataObject):
     def serialize(self, outputDirectory):
         
         xmlText = self.makeXMLDescriptor()                 
-        targetFile = f'{outputDirectory}/Languages/{self.Name}.xml'
+        targetFile = f'Languages/{self.Name}.xml'
 
-        utils.saveText(xmlText, targetFile)
+        utils.saveText(xmlText, outputDirectory, targetFile)
 
 
     def makeXMLDescriptor(self):
