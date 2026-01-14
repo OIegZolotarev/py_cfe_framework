@@ -1,6 +1,7 @@
 import uuid
 import xml.etree.ElementTree as ET
 import os
+from enum import Enum
 
 FORMAT_VERISON = "2.11"
 
@@ -43,13 +44,15 @@ def hackNamespaces(node: ET.Element):
     node.attrib["xmlns:xsi"] = "http://www.w3.org/2001/XMLSchema-instance"         
 
 
-def writeDocumentToString(doc: ET.ElementTree, addNamespace = False):
+def writeDocumentToString(doc: ET.Element, addNamespace = False):
     
     if addNamespace:
         hackNamespaces(doc)
+
+    doc.attrib['version'] = FORMAT_VERISON
     
     ET.indent(doc, space="  ", level=0)
-    xml_string = ET.tostring(doc, encoding='unicode', xml_declaration=True)
+    xml_string = ET.tostring(doc, encoding='utf-8',xml_declaration=True)
     return xml_string    
 
 def makeTextNode(nodeName : str, nodeText : str) -> ET.Element:
@@ -58,6 +61,8 @@ def makeTextNode(nodeName : str, nodeText : str) -> ET.Element:
     
     if type(nodeText) == str:
         element.text = nodeText
+    elif isinstance(nodeText, Enum):
+        element.text = nodeText.value
     else:
         element.text = str(nodeText)
     
@@ -65,10 +70,10 @@ def makeTextNode(nodeName : str, nodeText : str) -> ET.Element:
 
 def makeLocalizedTextNode(wrappedNode, nodeText : str, nodeName = 'v8:item', nodeLang = 'ru'):
     
-    
-    
+
     itemNode = ET.Element(nodeName)
     
+    # TODO: учитывать основной язык конфигурации, если не указан явно, а не по умолчанию лепить ru
     itemNode.append(makeTextNode('v8:lang', nodeLang.strip()))
     itemNode.append(makeTextNode('v8:content', nodeText))
     
@@ -256,6 +261,6 @@ def saveText(text, filepath):
     if dir_path:
         os.makedirs(dir_path, exist_ok=True)
         
-    f = open(filepath, "wt")
+    f = open(filepath, "wb")
     f.write(text)
     f.close()

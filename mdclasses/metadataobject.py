@@ -12,6 +12,9 @@ class MetaDataObject:
         self.Comment = ''
         self.UUID = id if id else str(uuid.uuid4())
         self.ObjectClass = ''
+
+        self.ObjectClass = type(self).__name__
+        self.ExtendedConfigurationObject = None
         
         pass
     

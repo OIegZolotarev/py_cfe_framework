@@ -1,4 +1,7 @@
 from mdclasses.metadataobject import MetaDataObject
+from mdclasses.language import Language
+from mdclasses.role import Role
+
 from enum import Enum
 
 import utils
@@ -22,7 +25,7 @@ class ConfigurationExtensionCompatibilityMode(Enum):
     Version8_3_26 = "Version8_3_26"
     Version8_3_27 = "Version8_3_27"
     
-class InterfaceCompatibilityMode:
+class InterfaceCompatibilityMode(Enum):
     Version8_2 = "Version8_2"
     Version8_2EnableTaxi = "Version8_2EnableTaxi"
     TaxiEnableVersion8_2 = "TaxiEnableVersion8_2"
@@ -59,23 +62,38 @@ class Configuration(MetaDataObject):
         self.Copyright = ''
         self.VendorInformationAddress = ''
         self.ConfigurationInformationAddress = ''
+
+        self.Language : Language = None
+
+    def registerObject(self, newObject : MetaDataObject) -> MetaDataObject:
+
+        self.ChildObjects.append(newObject)
+        return newObject
+
+    def setLanguage(self, parentLangId = None, langName = None, langCode = None, langObject = None):
+
+        if langObject == None:
+            self.Language = self.registerObject(Language(langName, langCode))                        
+        else:
+            self.Language = langObject
+
+        self.Language.ExtendedConfigurationObject = parentLangId
+
         
+    def setMainRole(self, roleName : str, roleObject: Role = None):        
         
-    def setMainRole(self, roleName : str, generateNew: bool = False):        
-        
-        self.MainRole = roleName
-        
-        if generateNew:
-            # TODO
-            pass
-        
+        if roleObject != None:
+            self.MainRole = roleObject        
+        else:
+            self.MainRole = self.registerObject(Role(roleName))
+                    
         pass
     
     def makeConfigurationXML(self):
         
         def makeApplicationUsePurposeNode():
     
-            valNode = ET.Element("v8:value")
+            valNode = ET.Element("v8:Value")
             valNode.attrib['xsi:type'] = 'app:ApplicationUsePurpose'
             valNode.text = 'PlatformApplication'
             
@@ -88,7 +106,7 @@ class Configuration(MetaDataObject):
             
             refNode = ET.Element('xr:Item')
             refNode.attrib['xsi:type'] = 'xr:MDObjectRef'
-            refNode.text = 'Role.' + self.MainRole
+            refNode.text = 'Role.' + self.MainRole.Name
             
             defaultRolesNode = ET.Element('DefaultRoles')
             defaultRolesNode.append(refNode)
@@ -146,7 +164,12 @@ class Configuration(MetaDataObject):
         propertiesNode.append(utils.makeTextNode("Vendor", self.Vendor))
         propertiesNode.append(utils.makeTextNode("Version", self.Version))
         
-        propertiesNode.append(utils.makeTextNode("DefaultLanguage", "Language.Русский"))
+        if self.Language == None:
+            raise Exception("Не указан основной язык конфигурации!")
+        
+        propertiesNode.append(utils.makeTextNode("DefaultLanguage", f"Language.{self.Language.Name}"))
+        
+
         
         propertiesNode.append(utils.makeLocalizedTextNode("BriefInformation", self.BriefInformation))
         propertiesNode.append(utils.makeLocalizedTextNode("DetailedInformation", self.DetailedInformation))
@@ -186,4 +209,7 @@ class Configuration(MetaDataObject):
         configurationXML = self.makeConfigurationXML()            
         utils.saveText(configurationXML, f"{outputDirectory}/Configuration.xml")
         
-        
+        # TODO: Так ли нужен ConfigDumpInfo.xml ? Без него вполне неплохо работает на объемах расширения
+
+        for obj in self.ChildObjects:
+            obj.serialize(outputDirectory)

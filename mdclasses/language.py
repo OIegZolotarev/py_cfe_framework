@@ -1,18 +1,18 @@
 import utils
-from xml.etree.ElementTree import ElementTree as ET
+import xml.etree.ElementTree as ET
 from mdclasses.metadataobject import MetaDataObject
 
 class Language(MetaDataObject):
     
     def __init__(self, name, langCode):
-        super().__init__(name)        
+        super().__init__(name)              
         self.LanguageCode = langCode
     
     def serialize(self, outputDirectory):
         
         xmlText = self.makeXMLDescriptor()                 
         targetFile = f'{outputDirectory}/Languages/{self.Name}.xml'
-        
+
         utils.saveText(xmlText, targetFile)
 
 
@@ -30,9 +30,9 @@ class Language(MetaDataObject):
         propertiesNode.append(utils.makeTextNode("Name", self.Name))
         propertiesNode.append(utils.makeTextNode("ObjectBelonging", "Adopted"))
         propertiesNode.append(utils.makeTextNode("LanguageCode", self.LanguageCode))
-        
-        # TODO: уместен ли захардкоженный id здесь?
-        propertiesNode.append(utils.makeTextNode("ExtendedConfigurationObject", '874fead0-d1f1-4826-a60d-eb068f566abd'))
+
+        if self.ExtendedConfigurationObject != None:
+            propertiesNode.append(utils.makeTextNode("ExtendedConfigurationObject", self.ExtendedConfigurationObject))
         
         languageNode.append(propertiesNode)
         
