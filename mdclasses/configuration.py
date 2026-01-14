@@ -211,3 +211,11 @@ class Configuration(MetaDataObject):
 
         for obj in self.ChildObjects:
             obj.serialize(outputDirectory)
+
+        if self.ManagedApplicationModule != None:
+            utils.saveText(self.ManagedApplicationModule.encode('utf-8'), outputDirectory,  "Ext/ManagedApplicationModule.bsl")
+
+        if self.ExternalConnectionModule != None:
+            utils.saveText(self.ExternalConnectionModule.encode('utf-8'), outputDirectory,  "Ext/ExternalConnectionModule.bsl")            
+        if self.SessionModule != None:
+            utils.saveText(self.SessionModule.encode('utf-8'), outputDirectory,             "Ext/SessionModule.bsl")                        

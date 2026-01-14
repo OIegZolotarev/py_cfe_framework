@@ -1,5 +1,6 @@
 import zipfile
-from mdclasses.configuration import Configuration, ConfigurationExtensionCompatibilityMode
+from mdclasses.configuration import Configuration, ConfigurationExtensionCompatibilityMode 
+from mdclasses.commonmodule import CommonModule
 
 
 test = Configuration("ЦАУ_Хотфиксы", "ЦАУ_", "Хотфиксы")
@@ -10,10 +11,31 @@ test.setLanguage(langName="Русский", langCode="ru")
 test.setMainRole(roleName="ЦАУ_ОсновнаяРоль")
 test.ConfigurationExtensionCompatibilityMode = ConfigurationExtensionCompatibilityMode.Version8_3_27
 
-z = zipfile.ZipFile("test.zip", 'w')
-test.serialize(z)
+module = CommonModule("ЦАУ_ОбщийМодуль")
+module.ModuleText = """
 
-z.close()
+Процедура ПриветМир() Экспорт
+    Сообщить("Привет мир");
+КонецПроцедуры
+
+"""
+test.registerObject(module)
+
+test.ManagedApplicationModule = """
+&После("ПриНачалеРаботыСистемы")
+Процедура ЦАУ_ПриНачалеРаботыСистемы()
+	
+	Сообщить("Ext generated from python!");	
+	
+КонецПроцедуры
+
+"""
+
+#z = zipfile.ZipFile("test.zip", 'w')
+#test.serialize(z)
+#z.close()
+
+test.serialize("sandbox")
 
 
 pass

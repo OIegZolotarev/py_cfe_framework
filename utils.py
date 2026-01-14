@@ -45,7 +45,7 @@ def hackNamespaces(node: ET.Element):
     node.attrib["xmlns:xsi"] = "http://www.w3.org/2001/XMLSchema-instance"         
 
 
-def writeDocumentToString(doc: ET.Element, addNamespace = False):
+def writeDocumentToString(doc: ET.Element, addNamespace = False) -> str:
     
     if addNamespace:
         hackNamespaces(doc)
