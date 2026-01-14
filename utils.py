@@ -1,5 +1,6 @@
 import uuid
 import xml.etree.ElementTree as ET
+import os
 
 FORMAT_VERISON = "2.11"
 
@@ -54,7 +55,11 @@ def writeDocumentToString(doc: ET.ElementTree, addNamespace = False):
 def makeTextNode(nodeName : str, nodeText : str) -> ET.Element:
     
     element = ET.Element(nodeName)
-    element.text = nodeText
+    
+    if type(nodeText) == str:
+        element.text = nodeText
+    else:
+        element.text = str(nodeText)
     
     return element
 
@@ -77,10 +82,8 @@ def booleanToString(val):
 
 def makeNameSynonimCommentNode(parentNode : ET.Element, data):
     
-    parentNode.append(makeTextNode("Name", data['Name']))
-    
-    parentNode.append(makeLocalizedTextNode("Synonym",data['Synonym']))
-    
+    parentNode.append(makeTextNode("Name", data['Name']))    
+    parentNode.append(makeLocalizedTextNode("Synonym",data['Synonym']))    
     parentNode.append(makeTextNode("Comment", data["Comment"]))
 
 def makeTypeDescriptionNode(types : list, nodeName = 'Type'):
@@ -246,3 +249,13 @@ def initLangData(name : str, code: str):
     result['Id'] = str(uuid.uuid4())
     
     return result
+
+def saveText(text, filepath):
+    
+    dir_path = os.path.dirname(os.path.abspath(filepath))
+    if dir_path:
+        os.makedirs(dir_path, exist_ok=True)
+        
+    f = open(filepath, "wt")
+    f.write(text)
+    f.close()

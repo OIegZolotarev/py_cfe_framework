@@ -106,7 +106,7 @@ def buildConfigDumpInfoXML(extensionData: dict):
         # TODO: сделать хеширование на основе фактических данных объекта?
         version = uuid.uuid4() 
                
-        metadataNode = makeMetadataNode(f'{object['ObjectClass']}.{object['Name']}', object[id], version)        
+        metadataNode = makeMetadataNode(f"{object['ObjectClass']}.{object['Name']}", object[id], version)        
         configVersionsNode.append(metadataNode)
         
         if object['HasData'] == True:
@@ -115,7 +115,7 @@ def buildConfigDumpInfoXML(extensionData: dict):
             idExt = '.0'
             			
 			
-            name = f'{object['ObjectClass']}.{object['Name']}'
+            name = f"{object['ObjectClass']}.{object['Name']}"
             
             if nameExt:
                 name += '.' + nameExt
@@ -158,12 +158,9 @@ def buildConfigDumpInfoXML(extensionData: dict):
 
 def buildConfigurationXML(extensionData: dict):
         
-    metaDataObjectNode = ET.Element("MetaDataObject")
-        
+    metaDataObjectNode = ET.Element("MetaDataObject")        
     metaDataObjectNode.attrib['version'] = utils.FORMAT_VERISON
-    
-    # TODO: later
-    nsMappings = {}
+
     
     internalInfoNode = ET.Element("InternalInfo")
     

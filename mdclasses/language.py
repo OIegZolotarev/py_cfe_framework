@@ -10,15 +10,11 @@ class Language(MetaDataObject):
     
     def serialize(self, outputDirectory):
         
-        xmlText = self.makeXMLDescriptor() 
-        
-        # TODO: проверить существование каталога
-        
+        xmlText = self.makeXMLDescriptor()                 
         targetFile = f'{outputDirectory}/Languages/{self.Name}.xml'
         
-        f = open(targetFile, 'wt')
-        f.write(xmlText)
-        f.close()
+        utils.saveText(xmlText, targetFile)
+
 
     def makeXMLDescriptor(self):
         metadataObjectNode = ET.Element("MetaDataObject")

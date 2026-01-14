@@ -1,57 +1,57 @@
 <?xml version='1.0' encoding='utf-8'?>
 <MetaDataObject version="2.11" xmlns="http://v8.1c.ru/8.3/MDClasses" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:cmi="http://v8.1c.ru/8.2/managed-application/cmi" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xen="http://v8.1c.ru/8.3/xcf/enums" xmlns:xpr="http://v8.1c.ru/8.3/xcf/predef" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <Configuration uuid="a86c2fb5-c821-428e-9d88-e9eb30f38282">
+  <Configuration uuid="66877399-c01c-40b6-8c39-28640bf4374a">
     <InternalInfo>
       <xr:ContainedObject>
         <xr:ClassId>9cd510cd-abfc-11d4-9434-004095e12fc7</xr:ClassId>
-        <xr:ObjectId>f531d34d-8a33-48ed-8b5a-f28f3a898d7f</xr:ObjectId>
+        <xr:ObjectId>13aef4ba-d48a-4142-8077-f5c3c08a4140</xr:ObjectId>
       </xr:ContainedObject>
       <xr:ContainedObject>
         <xr:ClassId>9fcd25a0-4822-11d4-9414-008048da11f9</xr:ClassId>
-        <xr:ObjectId>612ed332-e799-4791-b058-8c202f914040</xr:ObjectId>
+        <xr:ObjectId>72d1dc5b-f50f-42be-b4a0-5d026409e372</xr:ObjectId>
       </xr:ContainedObject>
       <xr:ContainedObject>
         <xr:ClassId>e3687481-0a87-462c-a166-9f34594f9bba</xr:ClassId>
-        <xr:ObjectId>4cc8fd56-948a-4401-9b88-ca32e1f5aba3</xr:ObjectId>
+        <xr:ObjectId>208f4e43-c6b7-4287-96c2-81e7ecff348f</xr:ObjectId>
       </xr:ContainedObject>
       <xr:ContainedObject>
         <xr:ClassId>9de14907-ec23-4a07-96f0-85521cb6b53b</xr:ClassId>
-        <xr:ObjectId>b6871b99-bc9d-42eb-8962-d5d80db2e250</xr:ObjectId>
+        <xr:ObjectId>1a1297f6-ba9e-407f-bb88-3fe4d882ec6d</xr:ObjectId>
       </xr:ContainedObject>
       <xr:ContainedObject>
         <xr:ClassId>51f2d5d8-ea4d-4064-8892-82951750031e</xr:ClassId>
-        <xr:ObjectId>6126ef9f-7a96-47ba-bd4f-39831a2df9f4</xr:ObjectId>
+        <xr:ObjectId>afac6af8-aa49-45cc-9a1a-d12668c8be79</xr:ObjectId>
       </xr:ContainedObject>
       <xr:ContainedObject>
         <xr:ClassId>e68182ea-4237-4383-967f-90c1e3370bc7</xr:ClassId>
-        <xr:ObjectId>cdd350f1-4f8d-49f6-b3b0-bf26dc5b1011</xr:ObjectId>
+        <xr:ObjectId>a3cfc2e8-3422-4e85-be15-071292bd68d1</xr:ObjectId>
       </xr:ContainedObject>
       <xr:ContainedObject>
         <xr:ClassId>fb282519-d103-4dd3-bc12-cb271d631dfc</xr:ClassId>
-        <xr:ObjectId>a48defd9-7ab2-4aa3-b6fe-64a7f3bb8b26</xr:ObjectId>
+        <xr:ObjectId>2e0d48ba-7471-4f97-ac61-90ceacd68f2a</xr:ObjectId>
       </xr:ContainedObject>
     </InternalInfo>
     <Properties>
-      <Name>ЦАУ_ИзмененияИзEDT</Name>
+      <Name>ЦАУ_Хотфиксы</Name>
       <Synonym>
         <v8:item>
           <v8:lang>ru</v8:lang>
-          <v8:content>Ц а У_ изменения из e d t</v8:content>
+          <v8:content>Хотфиксы</v8:content>
         </v8:item>
       </Synonym>
       <Comment />
-      <ConfigurationExtensionPurpose>Patch</ConfigurationExtensionPurpose>
+      <ConfigurationExtensionPurpose>ExtensionPurpose.Patch</ConfigurationExtensionPurpose>
       <ObjectBelonging>Adopted</ObjectBelonging>
       <KeepMappingToExtendedConfigurationObjectsByIDs>true</KeepMappingToExtendedConfigurationObjectsByIDs>
       <NamePrefix>ЦАУ_</NamePrefix>
-      <ConfigurationExtensionCompatibilityMode>Version8_3_24</ConfigurationExtensionCompatibilityMode>
+      <ConfigurationExtensionCompatibilityMode>ConfigurationExtensionCompatibilityMode.Version8_3_24</ConfigurationExtensionCompatibilityMode>
       <DefaultRunMode>ManagedApplication</DefaultRunMode>
       <UsePurposes>
         <v8:value xsi:type="app:ApplicationUsePurpose">PlatformApplication</v8:value>
       </UsePurposes>
       <ScriptVariant>Russian</ScriptVariant>
       <DefaultRoles>
-        <xr:Item xsi:type="xr:MDObjectRef">Role.ЦАУ_ОсновнаяРоль</xr:Item>
+        <xr:Item xsi:type="xr:MDObjectRef">Role.ОсновнаяРоль</xr:Item>
       </DefaultRoles>
       <Vendor />
       <Version>1.0.0.0</Version>
@@ -73,9 +73,6 @@
       <ConfigurationInformationAddress />
       <InterfaceCompatibilityMode>Taxi</InterfaceCompatibilityMode>
     </Properties>
-		<ChildObjects>
-			<Language>Русский</Language>
-			<Role>ЦАУ_ОсновнаяРоль</Role>
-		</ChildObjects>
+    <ChildObjects />
   </Configuration>
 </MetaDataObject>
