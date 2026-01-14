@@ -14,7 +14,7 @@ class Language(MetaDataObject):
         
         # TODO: проверить существование каталога
         
-        targetFile = f'{{outputDirectory}}/Languages/{self.Name}.xml'
+        targetFile = f'{outputDirectory}/Languages/{self.Name}.xml'
         
         f = open(targetFile, 'wt')
         f.write(xmlText)
