@@ -2,6 +2,8 @@ import uuid
 import xml.etree.ElementTree as ET
 import utils
 
+from mdclasses.language import Language
+
 def makeApplicationUsePurposeNode():
     
     valNode = ET.Element("v8:value")
@@ -23,7 +25,6 @@ def makeDefaultRolesNode(extensionData : dict):
     defaultRolesNode.append(refNode)
     
     return defaultRolesNode
-    
 
 def makeMetadataNode(objectName: str, id, version):
     metadataNode = ET.Element("Metadata")
@@ -42,10 +43,60 @@ def makeMetadataNode(objectName: str, id, version):
     
     return metadataNode
 
+def saveConfigurationObjects(extensionData):
+    
+    for obj in extensionData['Objects']:
+        
+        #match(obj['ObjectClass']):
+            #case 'Role':
+         
+        pass       
+    
+    pass
+
+def buildLanguageDescriptorXML(language: Language):
+    
+    metadataObjectNode = ET.Element("MetaDataObject")
+    metadataObjectNode.attrib['version'] = utils.FORMAT_VERISON
+    
+    languageNode = ET.Element("Language")
+    
+    languageNode.attrib["uuid"] = langData['Id']
+    
+    languageNode.append(ET.Element("InternalInfo"))
+    
+    propertiesNode = ET.Element("Properties")
+    propertiesNode.append(utils.makeTextNode("Name",langData['Name']))
+    propertiesNode.append(utils.makeTextNode("ObjectBelonging", "Adopted"))
+    propertiesNode.append(utils.makeTextNode("LanguageCode", langData['LanguageCode']))
+    
+    # TODO: уместен ли захардкоженный id здесь?
+    propertiesNode.append(utils.makeTextNode("ExtendedConfigurationObject", '874fead0-d1f1-4826-a60d-eb068f566abd'))
+    
+    languageNode.append(propertiesNode)
+    
+    metadataObjectNode.append(languageNode)    
+    return utils.writeDocumentToString(metadataObjectNode, True)    
+
+def buildRoleDescriptorXML(roleData):
+    
+    metadataObjectNode = ET.Element("MetaDataObject")
+    metadataObjectNode.attrib['version'] = utils.FORMAT_VERISON
+        
+    roleNode = ET.Element("Role")    
+    roleNode.attrib['uuid'] = roleData['Id']
+    
+    propetiesNode = ET.Element("Properties")
+    utils.makeNameSynonimCommentNode(propetiesNode, roleData)
+    
+    roleNode.append(propetiesNode)
+    
+    metadataObjectNode.append(roleNode)        
+    return utils.writeDocumentToString(metadataObjectNode, True)    
+    
+
 def buildConfigDumpInfoXML(extensionData: dict):
-    
-   
-    
+
     # writeDocumentToString запишет декларацию XML
     
     configVersionsNode = ET.Element("ConfigVersions")

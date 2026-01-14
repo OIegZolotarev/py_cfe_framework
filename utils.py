@@ -138,7 +138,6 @@ def getClassNameExtension(className):
         return "Rights"
     else:
         return ""
-    
 
 def initObjectData(objectClass: str, objectName: str, synonym: str, comment: str) -> dict:
     
@@ -237,4 +236,13 @@ def initExtensionData(confName: str, prefix: str, id: None):
     result['InterfaceCompatibilityMode'] = 'Taxi'
     
     return result
+
+def initLangData(name : str, code: str):
     
+    result = {}
+    
+    result['Name'] = name
+    result['LanguageCode'] = code
+    result['Id'] = str(uuid.uuid4())
+    
+    return result
