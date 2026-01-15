@@ -65,6 +65,10 @@ class Configuration(MetaDataObject):
 
         self.Language : Language = None
 
+    def initDefaults(self):
+        self.setLanguage(langName="Русский", langCode="ru")
+        self.setMainRole(roleName=self.NamePrefix + "ОсновнаяРоль")
+
     def registerObject(self, newObject : MetaDataObject) -> MetaDataObject:
 
         self.ChildObjects.append(newObject)
@@ -140,7 +144,7 @@ class Configuration(MetaDataObject):
         # Properties node
         propertiesNode = ET.Element("Properties")
         
-        self.writeCommonFields(propertiesNode)
+        self.generateCommonProperties(propertiesNode)
         
         propertiesNode.append(utils.makeTextNode("ConfigurationExtensionPurpose", self.ExtensionPurpose))
         propertiesNode.append(utils.makeTextNode("ObjectBelonging", "Adopted"))

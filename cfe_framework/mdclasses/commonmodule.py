@@ -45,7 +45,7 @@ class CommonModule(MetaDataObject):
         metaDataObjectNode = ET.Element("MetaDataObject")
 
         propertiesNode = ET.Element("Properties")
-        self.writeCommonFields(propertiesNode)
+        self.generateCommonProperties(propertiesNode)
 
         flags = ["Global", 
                  "ClientManagedApplication",

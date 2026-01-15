@@ -14,7 +14,7 @@ class Role(MetaDataObject):
         metadataObjectNode = ET.Element("MetaDataObject")
 
         propertiesNode = ET.Element("Properties")
-        self.writeCommonFields(propertiesNode)
+        self.generateCommonProperties(propertiesNode)
         
 
         roleNode = ET.Element("Role")        

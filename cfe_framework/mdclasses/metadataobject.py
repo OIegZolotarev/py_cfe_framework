@@ -15,17 +15,20 @@ class MetaDataObject:
 
         self.ObjectClass = type(self).__name__
         self.ExtendedConfigurationObject = None
-        
+
         pass
     
     
     def serialize(self, outputDirectory):
         pass
     
-    def writeCommonFields(self, parentNode: ET.Element):
+    def generateCommonProperties(self, parentNode: ET.Element):
         
         parentNode.append(utils.makeTextNode("Name", self.Name))    
         parentNode.append(utils.makeLocalizedTextNode("Synonym", self.Synonym))    
         parentNode.append(utils.makeTextNode("Comment", self.Comment))
+        if self.ExtendedConfigurationObject:
+            parentNode.append(utils.makeTextNode("ExtendedConfigurationObject", self.ExtendedConfigurationObject))
+            parentNode.append(utils.makeTextNode("ObjectBelonging", "Adopted"))
         
         pass

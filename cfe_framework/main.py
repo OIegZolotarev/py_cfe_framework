@@ -1,41 +1,67 @@
 import zipfile
+
 from mdclasses.configuration import Configuration, ConfigurationExtensionCompatibilityMode 
 from mdclasses.commonmodule import CommonModule
+from mdclasses.catalog import Catalog
+from mdclasses.referencedatatype import ModuleKind
 
+from mdclasses.commoncommand import CommonCommand
+from mdclasses.commandgroup import CommandGroup
 
-test = Configuration("ЦАУ_Хотфиксы", "ЦАУ_", "Хотфиксы")
+sampleCFE = Configuration("ЦАУ_Хотфиксы", "ЦАУ_", "Хотфиксы")
 
-# parentLangId - идентификатор языка из расширяемой конфигурации
-# , parentLangId='97d26151-6744-4347-b444-4403757b3ae8'
-test.setLanguage(langName="Русский", langCode="ru")
-test.setMainRole(roleName="ЦАУ_ОсновнаяРоль")
-test.ConfigurationExtensionCompatibilityMode = ConfigurationExtensionCompatibilityMode.Version8_3_27
+def testCatalog(cfg: Configuration):
 
-module = CommonModule("ЦАУ_ОбщийМодуль")
-module.ModuleText = """
+	catalog = cfg.registerObject(Catalog(name='Номенклатура'))
+	catalog.ExtendedConfigurationObject = '4650d7a2-9fbd-4f4d-ba92-0dd21eca0856'
 
-Процедура ПриветМир() Экспорт
-    Сообщить("Привет мир");
-КонецПроцедуры
+	text = """
 
-"""
-test.registerObject(module)
+	&Вместо("ПередЗаписью")
+	Процедура Расш1_ПередЗаписью(Отказ)
+		Сообщить("Генератор патчей :)"); 
+	КонецПроцедуры
 
-test.ManagedApplicationModule = """
-&После("ПриНачалеРаботыСистемы")
-Процедура ЦАУ_ПриНачалеРаботыСистемы()
+	"""
+
+	catalog.ExtendedModules[ModuleKind.ObjectModule] = text
+	catalog.ExtendedModules[ModuleKind.ManagerModule] = text
+
+def testCommonCommand(cfg: Configuration):
+
 	
-	Сообщить("Ext generated from python!");	
-	
+	commandGroup = CommandGroup("ГруппаКоманд1")
+	commandGroup.ExtendedConfigurationObject = '99cf519a-cf46-4c98-a3ea-b7a0e3a31598'
+	cfg.registerObject(commandGroup)
+
+
+	text = """&НаКлиенте
+&Вместо("ОбработкаКоманды")
+Процедура ЦАУ_ОбработкаКоманды(ПараметрКоманды, ПараметрыВыполненияКоманды)
+	Сообщить("Код загружен из генератора патчей :)")
 КонецПроцедуры
-
 """
+	cmd = CommonCommand("ОбщаяКоманда1")
+	cmd.ExtendedConfigurationObject = '87bdf0e0-dd4f-4d61-882a-eee775f1ab44'
 
-#z = zipfile.ZipFile("test.zip", 'w')
-#test.serialize(z)
-#z.close()
+	cmd.ExtendedModules[ModuleKind.CommandModule] = text
+	cmd.Group = 'CommandGroup.ГруппаКоманд1'
 
-test.serialize("sandbox")
+	cfg.registerObject(cmd)
+
+sampleCFE.setLanguage(langName="Русский", langCode="ru")
+sampleCFE.setMainRole(roleName="ЦАУ_ОсновнаяРоль")
+sampleCFE.ConfigurationExtensionCompatibilityMode = ConfigurationExtensionCompatibilityMode.Version8_3_27
+
+testCatalog(sampleCFE)
+testCommonCommand(sampleCFE)
+
+
+z = zipfile.ZipFile("C:/temp/patch.zip", 'w')
+sampleCFE.serialize(z)
+z.close()
+
+
 
 
 pass
