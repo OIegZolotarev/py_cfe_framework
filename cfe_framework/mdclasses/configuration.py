@@ -178,9 +178,9 @@ class Configuration(MetaDataObject):
         propertiesNode.append(utils.makeLocalizedTextNode("BriefInformation", self.BriefInformation))
         propertiesNode.append(utils.makeLocalizedTextNode("DetailedInformation", self.DetailedInformation))
         
-        propertiesNode.append(utils.makeTextNode("Copyright", self.Copyright))
-        propertiesNode.append(utils.makeTextNode("VendorInformationAddress", self.VendorInformationAddress))
-        propertiesNode.append(utils.makeTextNode("ConfigurationInformationAddress", self.ConfigurationInformationAddress))
+        propertiesNode.append(utils.makeLocalizedTextNode("Copyright", self.Copyright))
+        propertiesNode.append(utils.makeLocalizedTextNode("VendorInformationAddress", self.VendorInformationAddress))
+        propertiesNode.append(utils.makeLocalizedTextNode("ConfigurationInformationAddress", self.ConfigurationInformationAddress))
         
         propertiesNode.append(utils.makeTextNode("InterfaceCompatibilityMode", self.InterfaceCompatibilityMode))
         

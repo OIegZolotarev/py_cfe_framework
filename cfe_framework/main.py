@@ -158,6 +158,19 @@ sampleCFE.setLanguage(langName="Русский", langCode="ru")
 sampleCFE.setMainRole(roleName="ЦАУ_ОсновнаяРоль")
 sampleCFE.ConfigurationExtensionCompatibilityMode = ConfigurationExtensionCompatibilityMode.Version8_3_27
 
+from datetime import datetime
+sampleCFE.Version = '1.0.0.0+' + str(datetime.now())
+sampleCFE.Vendor = 'QuiteOldOrange'
+
+sampleCFE.Copyright = 'Олег Золотарев' 
+sampleCFE.VendorInformationAddress = 'ovzolotarev@gmail.com'
+sampleCFE.ConfigurationInformationAddress = 'https://github.com/OIegZolotarev/py_cfe_framework'
+
+sampleCFE.BriefInformation = 'Расширение сгенерированно с помощью библиотеки py_cfe_framework'
+sampleCFE.DetailedInformation = 'Библиотека была написана в ответ на сломанное динамическое обновление в платформе 8.3.27'
+
+
+
 testCatalog(sampleCFE)
 testCommonCommand(sampleCFE)
 testCommonModule(sampleCFE)
