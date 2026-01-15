@@ -1,5 +1,6 @@
 import xml.etree.ElementTree as ET
 import cfe_framework.utils as utils
+from  .objectform import ObjectForm
 
 from .metadataobject import MetaDataObject
 from enum import Enum
@@ -24,6 +25,9 @@ class ReferenceDataType(MetaDataObject):
 
         self.ExtendedModules : dict[ModuleKind, str]
         self.ExtendedModules = {} 
+
+        self.Forms: list[ObjectForm]
+        self.Forms = []
 
     def generateInternalInfoBlock(self, block: ET.Element):
 
@@ -54,8 +58,6 @@ class ReferenceDataType(MetaDataObject):
 
             block.append(propertyStateNode)
 
-        # 2) Сохранить заимствования модулей.
-
         pass
 
     def saveModules(self, outputDirectoryOrArchive, destPath):
@@ -67,3 +69,14 @@ class ReferenceDataType(MetaDataObject):
             
             fileName = f'{destPath}/{moduleKind.value}.bsl'
             utils.saveText(moduleText, outputDirectoryOrArchive, fileName)
+
+
+    def generateFormsDescriptors(self, childObjectsNode: ET.Element):
+
+        for form in self.Forms:
+            childObjectsNode.append(utils.makeTextNode("Form", form.Name))            
+
+    def saveForms(self, outputDirectoryOrArchive, filesPath: str):
+
+        for form in self.Forms:            
+            form.serialize(outputDirectoryOrArchive, filesPath)            

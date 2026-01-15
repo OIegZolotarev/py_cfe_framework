@@ -5,9 +5,11 @@ from mdclasses.modulekind import ModuleKind
 from mdclasses.configuration import Configuration, ConfigurationExtensionCompatibilityMode 
 from mdclasses.commonmodule import CommonModule
 from mdclasses.catalog import Catalog
+from mdclasses.document import Document
 from mdclasses.commoncommand import CommonCommand
 from mdclasses.commandgroup import CommandGroup
 from mdclasses.httpservice import HTTPService
+from mdclasses.objectform import ObjectForm
 
 from mdclasses.constant import Constant
 
@@ -31,7 +33,8 @@ def testCommonModule(cfg: Configuration):
 
 def testCatalog(cfg: Configuration):
 
-	catalog = cfg.registerObject(Catalog(name='Номенклатура'))
+	catalog = Catalog(name='Номенклатура')
+	catalog = cfg.registerObject(catalog)
 	catalog.ExtendedConfigurationObject = '4650d7a2-9fbd-4f4d-ba92-0dd21eca0856'
 
 	text = """
@@ -45,6 +48,24 @@ def testCatalog(cfg: Configuration):
 
 	catalog.ExtendedModules[ModuleKind.ObjectModule] = text
 	catalog.ExtendedModules[ModuleKind.ManagerModule] = text
+
+	form = ObjectForm("ФормаЭлемента")
+	form.ExtendedConfigurationObject = '9be54424-2c12-4c3d-a36c-8b1f1f254bc4'
+
+	form.ModuleText = f"""
+
+
+&НаСервере    
+&Вместо("ПриСозданииНаСервере")
+Процедура ЦАУ_ПриСозданииНаСервере(Отказ, СтандартнаяОбработка)
+	Сообщить("Модуль формы из генератора патчей {form}");
+	
+КонецПроцедуры
+
+
+"""
+	
+	catalog.Forms.append(form)
 
 def testCommonCommand(cfg: Configuration):
 
@@ -101,6 +122,38 @@ def testConstant(cfg: Configuration):
 
 	cfg.registerObject(constant)
 
+def testDocument(cfg: Configuration):
+
+	doc = Document('ТестовыйДокумент')
+	doc.ExtendedConfigurationObject = '4b5bb55b-5053-4d11-bebc-d27a72b08ede'
+
+	objectModuleText = f"// Текст модуля объекта сгененирован генератором патчей :) {doc}"
+	managerModuleText = f"// Текст модуля менеджера сгененирован генератором патчей :) {doc}"
+
+	doc.ExtendedModules[ModuleKind.ObjectModule] = objectModuleText
+	doc.ExtendedModules[ModuleKind.ManagerModule] = managerModuleText
+
+	form = ObjectForm("ФормаДокумента")
+	form.ExtendedConfigurationObject = '01d685e0-257b-4a55-b162-4075efa080a2'
+
+	form.ModuleText = f"""
+
+
+&НаСервере    
+&Вместо("ПриСозданииНаСервере")
+Процедура ЦАУ_ПриСозданииНаСервере(Отказ, СтандартнаяОбработка)
+	Сообщить("Модуль формы из генератора патчей {form}, {doc}");
+	
+КонецПроцедуры
+
+
+"""
+	
+	doc.Forms.append(form)
+
+	cfg.registerObject(doc)
+
+
 sampleCFE.setLanguage(langName="Русский", langCode="ru")
 sampleCFE.setMainRole(roleName="ЦАУ_ОсновнаяРоль")
 sampleCFE.ConfigurationExtensionCompatibilityMode = ConfigurationExtensionCompatibilityMode.Version8_3_27
@@ -110,6 +163,7 @@ testCommonCommand(sampleCFE)
 testCommonModule(sampleCFE)
 testHTTPService(sampleCFE)
 testConstant(sampleCFE)
+testDocument(sampleCFE)
 
 
 z = zipfile.ZipFile("C:/temp/patch.zip", 'w')

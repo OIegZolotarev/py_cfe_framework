@@ -274,3 +274,12 @@ def saveText(text, directoryOrArchive, filepath):
 
         directoryOrArchive.writestr(filepath, text)
 
+
+def makePropertyStateNode(property: str, state: str):
+
+    r = ET.Element("xr:PropertyState")
+
+    r.append(makeTextNode("xr:Property", property))
+    r.append(makeTextNode("xr:State", state))
+
+    return r

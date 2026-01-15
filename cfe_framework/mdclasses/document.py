@@ -3,7 +3,7 @@ from .referencedatatype import ReferenceDataType, ModuleKind
 
 import cfe_framework.utils as utils
 
-class Catalog(ReferenceDataType):
+class Document(ReferenceDataType):
 
     def __init__(self, name, synonym=None, id=None):
         super().__init__(name, synonym, id)
@@ -16,24 +16,24 @@ class Catalog(ReferenceDataType):
     def makeDescriptorXML(self):
 
         metaDataNode = ET.Element("MetaDataOBject")
-        catalogNode = ET.Element("Catalog")
-        catalogNode.attrib['uuid'] = self.UUID
+        DocumentNode = ET.Element("Document")
+        DocumentNode.attrib['uuid'] = self.UUID
 
         internalInfoNode = ET.Element("InternalInfo")
         self.generateInternalInfoBlock(internalInfoNode)
 
-        catalogNode.append(internalInfoNode)
+        DocumentNode.append(internalInfoNode)
 
         propertiesNode = ET.Element("Properties")
         self.generateCommonProperties(propertiesNode)
 
-        catalogNode.append(propertiesNode)
+        DocumentNode.append(propertiesNode)
 
         childObjectsNode = ET.Element("ChildObjects")
         self.generateFormsDescriptors(childObjectsNode)
-        catalogNode.append(childObjectsNode)
+        DocumentNode.append(childObjectsNode)
 
-        metaDataNode.append(catalogNode)
+        metaDataNode.append(DocumentNode)
 
         return utils.writeDocumentToString(metaDataNode, True)
 
@@ -41,14 +41,14 @@ class Catalog(ReferenceDataType):
     def serialize(self, outputDirectory):
 
         descriptor = self.makeDescriptorXML()
-        descriptorFile = f'Catalogs/{self.Name}.xml'
+        descriptorFile = f'Documents/{self.Name}.xml'
 
-        extPath = f'Catalogs/{self.Name}/Ext'
+        extPath = f'Documents/{self.Name}/Ext'
 
         utils.saveText(descriptor, outputDirectory, descriptorFile)
 
         self.saveModules(outputDirectory, extPath)
 
-        formsPath = f'Catalogs/{self.Name}/Forms'
+        formsPath = f'Documents/{self.Name}/Forms'
         self.saveForms(outputDirectory, formsPath)
 
