@@ -1,13 +1,15 @@
 import zipfile
 
-from mdclasses.configuration import Configuration, ConfigurationExtensionCompatibilityMode 
+from mdclasses.modulekind import ModuleKind
 
+from mdclasses.configuration import Configuration, ConfigurationExtensionCompatibilityMode 
 from mdclasses.commonmodule import CommonModule
 from mdclasses.catalog import Catalog
-from mdclasses.referencedatatype import ModuleKind
 from mdclasses.commoncommand import CommonCommand
 from mdclasses.commandgroup import CommandGroup
 from mdclasses.httpservice import HTTPService
+
+from mdclasses.constant import Constant
 
 sampleCFE = Configuration("ЦАУ_Хотфиксы", "ЦАУ_", "Хотфиксы")
 
@@ -80,6 +82,25 @@ def testHTTPService(cfg: Configuration):
 	
 	cfg.registerObject(service)
 
+def testConstant(cfg: Configuration):
+
+	constant = Constant('Константа1')
+	constant.ExtendedConfigurationObject = 'edfc555a-9afe-4bfe-bced-3ebe46f3be80'
+
+	constant.ExtendedModules[ModuleKind.ValueManagerModule] = f"""
+&После("ПриветМир")
+Процедура ЦАУ_ПриветМир()
+	// Вставить содержимое метода.
+	// {constant}
+КонецПроцедуры
+"""
+	
+	constant.ExtendedModules[ModuleKind.ManagerModule] = f"""
+	// {constant}
+"""
+
+	cfg.registerObject(constant)
+
 sampleCFE.setLanguage(langName="Русский", langCode="ru")
 sampleCFE.setMainRole(roleName="ЦАУ_ОсновнаяРоль")
 sampleCFE.ConfigurationExtensionCompatibilityMode = ConfigurationExtensionCompatibilityMode.Version8_3_27
@@ -88,6 +109,7 @@ testCatalog(sampleCFE)
 testCommonCommand(sampleCFE)
 testCommonModule(sampleCFE)
 testHTTPService(sampleCFE)
+testConstant(sampleCFE)
 
 
 z = zipfile.ZipFile("C:/temp/patch.zip", 'w')
