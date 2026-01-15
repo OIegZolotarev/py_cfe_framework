@@ -14,6 +14,8 @@ class ModuleKind(Enum):
     RecordSetModule         = "RecordSetModule"
     ValueManagerModule      = "ValueManagerModule"    
 
+    Module                  = "Module"
+
 
 class ReferenceDataType(MetaDataObject):
 

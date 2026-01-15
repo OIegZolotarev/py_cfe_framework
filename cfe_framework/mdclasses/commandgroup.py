@@ -13,7 +13,6 @@ class CommandGroup(GenericV8Object):
     def makeXMLDescriptor(self):
 
         metaDataObjectNode = ET.Element("MetaDataObject")
-        
 
         commandGroupNode = ET.Element("CommandGroup")
         commandGroupNode.attrib['uuid'] = self.UUID

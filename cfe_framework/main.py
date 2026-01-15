@@ -1,14 +1,31 @@
 import zipfile
 
 from mdclasses.configuration import Configuration, ConfigurationExtensionCompatibilityMode 
+
 from mdclasses.commonmodule import CommonModule
 from mdclasses.catalog import Catalog
 from mdclasses.referencedatatype import ModuleKind
-
 from mdclasses.commoncommand import CommonCommand
 from mdclasses.commandgroup import CommandGroup
+from mdclasses.httpservice import HTTPService
 
 sampleCFE = Configuration("ЦАУ_Хотфиксы", "ЦАУ_", "Хотфиксы")
+
+def testCommonModule(cfg: Configuration):
+
+	commonModule = CommonModule("ТестовыйОбщийМодуль")
+	
+
+	commonModule.ModuleText = f"""
+
+Процедура ПриветМир()
+	// Модуль сгенерирован генератором патчей :)
+	// f{commonModule}
+	Сообщить("Здорова!");
+КонецПроцедуры
+"""
+
+	cfg.registerObject(commonModule)
 
 def testCatalog(cfg: Configuration):
 
@@ -49,12 +66,28 @@ def testCommonCommand(cfg: Configuration):
 
 	cfg.registerObject(cmd)
 
+def testHTTPService(cfg: Configuration):
+
+	service = HTTPService("HTTPСервис1")
+
+	service.ExtendedConfigurationObject = '80e3bbff-85a6-4bc8-81c8-886ebd74254f'
+	
+	service.ExtendedModules[ModuleKind.Module] = f"""
+
+	// Код HTTP сервиса сгенирован генератором патчей  :)
+	// {service}
+"""
+	
+	cfg.registerObject(service)
+
 sampleCFE.setLanguage(langName="Русский", langCode="ru")
 sampleCFE.setMainRole(roleName="ЦАУ_ОсновнаяРоль")
 sampleCFE.ConfigurationExtensionCompatibilityMode = ConfigurationExtensionCompatibilityMode.Version8_3_27
 
 testCatalog(sampleCFE)
 testCommonCommand(sampleCFE)
+testCommonModule(sampleCFE)
+testHTTPService(sampleCFE)
 
 
 z = zipfile.ZipFile("C:/temp/patch.zip", 'w')
