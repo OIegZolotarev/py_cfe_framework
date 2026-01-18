@@ -39,6 +39,8 @@ class Configuration(MetaDataObject):
         self.NamePrefix = prefix        
         self.MainRole = None
         self.ChildObjects : list[MetaDataObject] = []
+
+        self.ChildObjectPresence = {}
         
         self.ExtensionPurpose = ExtensionPurpose.Patch
         
@@ -71,6 +73,10 @@ class Configuration(MetaDataObject):
 
     def registerObject(self, newObject : MetaDataObject) -> MetaDataObject:
 
+        if newObject.Name in self.ChildObjectPresence:
+            return self.ChildObjectPresence[newObject.Name]
+        
+        self.ChildObjectPresence[newObject.Name] = newObject
         self.ChildObjects.append(newObject)
         return newObject
 
