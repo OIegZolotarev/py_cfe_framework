@@ -3,6 +3,8 @@ from .referencedatatype import ModuleKind
 import xml.etree.ElementTree as ET
 import cfe_framework.utils as utils
 
+from .objectform import ObjectForm
+
 class GenericV8Object(MetaDataObject):
 
     def __init__(self, name, synonym = None, id=None):
@@ -10,6 +12,8 @@ class GenericV8Object(MetaDataObject):
 
         self.ExtendedModules : dict[ModuleKind, str]
         self.ExtendedModules = {} 
+        
+
 
     def serialize(self, outputDirectory):
         return super().serialize(outputDirectory)
@@ -40,3 +44,5 @@ class GenericV8Object(MetaDataObject):
             
             fileName = f'{destPath}/{moduleKind.value}.bsl'
             utils.saveText(moduleText, outputDirectoryOrArchive, fileName)
+            
+      

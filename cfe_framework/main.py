@@ -5,6 +5,7 @@ from mdclasses.modulekind import ModuleKind
 from mdclasses.configuration import Configuration, ConfigurationExtensionCompatibilityMode 
 from mdclasses.commonmodule import CommonModule
 from mdclasses.catalog import Catalog
+from mdclasses.dataprocessor import DataProcessor
 from mdclasses.document import Document
 from mdclasses.commoncommand import CommonCommand
 from mdclasses.commandgroup import CommandGroup
@@ -153,6 +154,18 @@ def testDocument(cfg: Configuration):
 
 	cfg.registerObject(doc)
 
+def testDataProcessor(cfg: Configuration):
+   
+	dp = DataProcessor("ФайлыБТС")
+	dp.ExtendedConfigurationObject = 'c161a9d9-21de-45fd-ab8c-ab382a7c7436'
+
+	objectModuleText = f' // Вот они, слева направо {dp}'
+
+	dp.ExtendedModules[ModuleKind.ObjectModule] = objectModuleText
+
+	cfg.registerObject(dp)
+
+	pass
 
 sampleCFE.setLanguage(langName="Русский", langCode="ru")
 sampleCFE.setMainRole(roleName="ЦАУ_ОсновнаяРоль")
@@ -177,9 +190,10 @@ testCommonModule(sampleCFE)
 testHTTPService(sampleCFE)
 testConstant(sampleCFE)
 testDocument(sampleCFE)
+testDataProcessor(sampleCFE)
 
 
-z = zipfile.ZipFile("C:/temp/patch.zip", 'w')
+z = zipfile.ZipFile("/home/ozolotarev/patch.zip", 'w')
 sampleCFE.serialize(z)
 z.close()
 
