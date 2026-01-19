@@ -73,10 +73,12 @@ class Configuration(MetaDataObject):
 
     def registerObject(self, newObject : MetaDataObject) -> MetaDataObject:
 
-        if newObject.Name in self.ChildObjectPresence:
-            return self.ChildObjectPresence[newObject.Name]
+        fullName = f'{newObject.ObjectClass}.{newObject.Name}'
         
-        self.ChildObjectPresence[newObject.Name] = newObject
+        if fullName in self.ChildObjectPresence:
+            return self.ChildObjectPresence[fullName]
+        
+        self.ChildObjectPresence[fullName] = newObject
         self.ChildObjects.append(newObject)
         return newObject
 
