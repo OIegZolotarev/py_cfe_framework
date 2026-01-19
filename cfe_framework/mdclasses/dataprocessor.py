@@ -7,11 +7,6 @@ import uuid
 
 import xml.etree.ElementTree as ET
 
-# TODO: пересмотреть иерархию классов
-# MetaDataObject -> GenericV8Object (с модулями и формами) -> TypeProducingV8Object (RDO и обработки?)
-#                       |                                           |
-#                   Команды, httpсервис и прочее                Константы, Обработки, Документы, Справочники
-#
 class DataProcessor(TypeProducingObject):
     
     def __init__(self, name, synonym=None, id=None):
@@ -56,6 +51,4 @@ class DataProcessor(TypeProducingObject):
         metaDataNode.append(dataProcessorNode)
 
         return utils.writeDocumentToString(metaDataNode, True)
-        
-        pass
-    
+
