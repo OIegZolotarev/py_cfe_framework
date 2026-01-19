@@ -2,14 +2,14 @@ import xml.etree.ElementTree as ET
 import cfe_framework.utils as utils
 from  .objectform import ObjectForm
 
-from .metadataobject import MetaDataObject
+from .typeproducing_object import TypeProducingObject
 from enum import Enum
 import uuid
 
 from .modulekind import ModuleKind
 
 
-class ReferenceDataType(MetaDataObject):
+class ReferenceDataType(TypeProducingObject):
 
     def __init__(self, name, synonym = None, id=None):
         super().__init__(name, synonym, id)
@@ -18,16 +18,7 @@ class ReferenceDataType(MetaDataObject):
 
         typeKinds = ['Object', 'Ref', 'Selection', 'List', 'Manager']
 
-        for kind in typeKinds:
-            self.GeneratedTypes[kind] = f'{self.ObjectClass}{kind}.{self.Name}'
-
-        pass
-
-        self.ExtendedModules : dict[ModuleKind, str]
-        self.ExtendedModules = {} 
-
-        self.Forms: list[ObjectForm]
-        self.Forms = []
+        self.declareGeneratedTypes(typeKinds)
 
     def generateInternalInfoBlock(self, block: ET.Element):
 
@@ -71,12 +62,3 @@ class ReferenceDataType(MetaDataObject):
             utils.saveText(moduleText, outputDirectoryOrArchive, fileName)
 
 
-    def generateFormsDescriptors(self, childObjectsNode: ET.Element):
-
-        for form in self.Forms:
-            childObjectsNode.append(utils.makeTextNode("Form", form.Name))            
-
-    def saveForms(self, outputDirectoryOrArchive, filesPath: str):
-
-        for form in self.Forms:            
-            form.serialize(outputDirectoryOrArchive, filesPath)            

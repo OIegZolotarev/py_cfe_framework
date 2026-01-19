@@ -1,5 +1,5 @@
 from .metadataobject import MetaDataObject
-from .referencedatatype import ModuleKind
+from .modulekind import ModuleKind
 import xml.etree.ElementTree as ET
 import cfe_framework.utils as utils
 

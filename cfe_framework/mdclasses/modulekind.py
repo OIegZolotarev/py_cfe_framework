@@ -1,4 +1,3 @@
-from .metadataobject import MetaDataObject
 from enum import Enum
 
 class ModuleKind(Enum):
