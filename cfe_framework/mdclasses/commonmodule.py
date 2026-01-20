@@ -14,13 +14,13 @@ class CommonModule(MetaDataObject):
     def __init__(self, name, synonym = None, id=None):
         super().__init__(name, synonym, id)
 
-        self.Global                     = False
-        self.ClientManagedApplication   = False
-        self.ExternalConnection         = False
-        self.ClientOrdinaryApplication  = False
-        self.ServerCall                 = False
-        self.Server                     = False
-        self.Privileged                 = False
+        self.Global                     = None
+        self.ClientManagedApplication   = None
+        self.ExternalConnection         = None
+        self.ClientOrdinaryApplication  = None
+        self.ServerCall                 = None
+        self.Server                     = None
+        self.Privileged                 = None
         
         self.ReturnValuesReuse = ReturnValuesReuse.DontUse
 
@@ -56,7 +56,11 @@ class CommonModule(MetaDataObject):
                  "Privileged"]
 
         for flag in flags:
-            propertiesNode.append(utils.makeTextNode(flag, utils.booleanToString(getattr(self, flag))))
+            
+            attrVal = getattr(self, flag)
+            
+            if attrVal:
+                propertiesNode.append(utils.makeTextNode(flag, utils.booleanToString()))
 
         propertiesNode.append(utils.makeTextNode("ReturnValuesReuse", self.ReturnValuesReuse))
 

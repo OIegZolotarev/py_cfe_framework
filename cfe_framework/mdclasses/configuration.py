@@ -50,8 +50,8 @@ class Configuration(MetaDataObject):
         self.SessionModule             = None
         self.ExternalConnectionModule  = None
         
-        self.ConfigurationExtensionCompatibilityMode = ConfigurationExtensionCompatibilityMode.Version8_3_24
-        self.InterfaceCompatibilityMode = InterfaceCompatibilityMode.Taxi
+        self.ConfigurationExtensionCompatibilityMode = None # ConfigurationExtensionCompatibilityMode.Version8_3_24
+        self.InterfaceCompatibilityMode = None # InterfaceCompatibilityMode.Taxi
         
         # Сведения о разработке.
         
@@ -163,7 +163,8 @@ class Configuration(MetaDataObject):
         propertiesNode.append(utils.makeTextNode("NamePrefix", self.NamePrefix))
         
         mode = self.ConfigurationExtensionCompatibilityMode
-        propertiesNode.append(utils.makeTextNode("ConfigurationExtensionCompatibilityMode", mode))
+        if mode:
+            propertiesNode.append(utils.makeTextNode("ConfigurationExtensionCompatibilityMode", mode))
         
         propertiesNode.append(utils.makeTextNode("DefaultRunMode", "ManagedApplication"))
         
@@ -190,7 +191,8 @@ class Configuration(MetaDataObject):
         propertiesNode.append(utils.makeLocalizedTextNode("VendorInformationAddress", self.VendorInformationAddress))
         propertiesNode.append(utils.makeLocalizedTextNode("ConfigurationInformationAddress", self.ConfigurationInformationAddress))
         
-        propertiesNode.append(utils.makeTextNode("InterfaceCompatibilityMode", self.InterfaceCompatibilityMode))
+        if self.InterfaceCompatibilityMode:
+            propertiesNode.append(utils.makeTextNode("InterfaceCompatibilityMode", self.InterfaceCompatibilityMode))
         
         configurationNode.append(propertiesNode)
         
