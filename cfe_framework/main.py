@@ -11,8 +11,8 @@ from mdclasses.commoncommand import CommonCommand
 from mdclasses.commandgroup import CommandGroup
 from mdclasses.httpservice import HTTPService
 from mdclasses.objectform import ObjectForm
-
 from mdclasses.constant import Constant
+from mdclasses.accumulationregister import AccumulationRegister
 
 sampleCFE = Configuration("ЦАУ_Хотфиксы", "ЦАУ_", "Хотфиксы")
 
@@ -167,6 +167,17 @@ def testDataProcessor(cfg: Configuration):
 
 	pass
 
+def testAccumulationRegister(cfg: Configuration):
+    
+	ar = AccumulationRegister("АвансовыеПлатежиИностранцевПоНДФЛ")
+	ar.ExtendedConfigurationObject = 'b2bac7d5-6dba-40f3-91d4-dd31914418b4'
+
+	ar.ExtendedModules[ModuleKind.ManagerModule] = f'// aaaa {ar}'
+	ar.ExtendedModules[ModuleKind.RecordSetModule] = f'// aaaa  2222 {ar}'
+
+	cfg.registerObject(ar)
+    
+
 sampleCFE.setLanguage(langName="Русский", langCode="ru")
 sampleCFE.setMainRole(roleName="ЦАУ_ОсновнаяРоль")
 sampleCFE.ConfigurationExtensionCompatibilityMode = ConfigurationExtensionCompatibilityMode.Version8_3_27
@@ -191,6 +202,7 @@ testHTTPService(sampleCFE)
 testConstant(sampleCFE)
 testDocument(sampleCFE)
 testDataProcessor(sampleCFE)
+testAccumulationRegister(sampleCFE)
 
 
 z = zipfile.ZipFile("/home/ozolotarev/patch.zip", 'w')
