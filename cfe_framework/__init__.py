@@ -1,7 +1,7 @@
 
 
 
-
+from .mdclasses.accumulationregister import AccumulationRegister
 from .mdclasses.catalog import Catalog
 from .mdclasses.commandgroup import CommandGroup
 from .mdclasses.commoncommand import CommonCommand

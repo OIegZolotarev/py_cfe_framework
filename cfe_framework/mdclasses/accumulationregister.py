@@ -16,7 +16,7 @@ class AccumulationRegister(TypeProducingObject):
         types = ['Record', 'Manager', 'Selection', 'List', 'RecordSet', 'RecordKey']
         self.declareGeneratedTypes(types)
         
-        self.RegisterType = AccumulationRegisterTypes.Turnovers
+        self.RegisterType = None
         
     def makeDescriptorXML(self):
 
@@ -32,7 +32,8 @@ class AccumulationRegister(TypeProducingObject):
         propertiesNode = ET.Element("Properties")
         self.generateCommonProperties(propertiesNode)
 
-        propertiesNode.append(utils.makeTextNode("RegisterType", self.RegisterType.value))
+        if self.RegisterType:
+            propertiesNode.append(utils.makeTextNode("RegisterType", self.RegisterType.value))
         
         accumulationRegisterNode.append(propertiesNode)
 

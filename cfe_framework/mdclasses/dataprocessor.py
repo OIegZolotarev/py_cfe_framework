@@ -16,16 +16,19 @@ class DataProcessor(TypeProducingObject):
         self.declareGeneratedTypes(typeKinds)
 
         
-    def serialize(self, outputDirectory):
+    def serialize(self, outputDirectoryOrArchive):
         
         descriptor = self.makeDescriptorXML()
         descriptorFile = f'DataProcessors/{self.Name}.xml'
 
         extPath = f'DataProcessors/{self.Name}/Ext'
 
-        utils.saveText(descriptor, outputDirectory, descriptorFile)
+        utils.saveText(descriptor, outputDirectoryOrArchive, descriptorFile)
 
-        self.saveModules(outputDirectory, extPath)
+        self.saveModules(outputDirectoryOrArchive, extPath)
+        
+        formsPath = f'DataProcessors/{self.Name}/Forms'
+        self.saveForms(outputDirectoryOrArchive, formsPath)
         
         pass
     
