@@ -1,18 +1,6 @@
 import zipfile
 
-from mdclasses.modulekind import ModuleKind
-
-from mdclasses.configuration import Configuration, ConfigurationExtensionCompatibilityMode 
-from mdclasses.commonmodule import CommonModule
-from mdclasses.catalog import Catalog
-from mdclasses.dataprocessor import DataProcessor
-from mdclasses.document import Document
-from mdclasses.commoncommand import CommonCommand
-from mdclasses.commandgroup import CommandGroup
-from mdclasses.httpservice import HTTPService
-from mdclasses.objectform import ObjectForm
-from mdclasses.constant import Constant
-from mdclasses.accumulationregister import AccumulationRegister
+from cfe_framework import *
 
 sampleCFE = Configuration("ЦАУ_Хотфиксы", "ЦАУ_", "Хотфиксы")
 
@@ -32,7 +20,15 @@ def testCommonModule(cfg: Configuration):
 
 	cfg.registerObject(commonModule)
 
-def testCatalog(cfg: Configuration):
+def testMassCatalogs(cfg: Configuration, amount = 1000):
+
+	for i in range(1, amount):
+		catalog = Catalog(name=f'Справочник_{i}')
+		catalog = cfg.registerObject(catalog)
+
+
+
+def testCatalog(cfg: Configuration,):
 
 	catalog = Catalog(name='Номенклатура')
 	catalog = cfg.registerObject(catalog)
@@ -204,8 +200,9 @@ testDocument(sampleCFE)
 testDataProcessor(sampleCFE)
 testAccumulationRegister(sampleCFE)
 
+testMassCatalogs(sampleCFE)
 
-z = zipfile.ZipFile("/home/ozolotarev/patch.zip", 'w')
+z = zipfile.ZipFile("C:/temp/patch.zip", 'w')
 sampleCFE.serialize(z)
 z.close()
 
