@@ -6,7 +6,7 @@ from .mdclasses.catalog import Catalog
 from .mdclasses.commandgroup import CommandGroup
 from .mdclasses.commoncommand import CommonCommand
 from .mdclasses.commonmodule import CommonModule
-from .mdclasses.configuration import Configuration, ConfigurationExtensionCompatibilityMode 
+from .mdclasses.configuration import Configuration, ConfigurationExtensionCompatibilityMode, ExtensionPurpose
 from .mdclasses.constant import Constant
 from .mdclasses.dataprocessor import DataProcessor
 from .mdclasses.document import Document

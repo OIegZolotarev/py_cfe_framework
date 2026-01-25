@@ -20,7 +20,7 @@ def testCommonModule(cfg: Configuration):
 
 	cfg.registerObject(commonModule)
 
-def testMassCatalogs(cfg: Configuration, amount = 1000):
+def testMassCatalogs(cfg: Configuration, amount = 5000):
 
 	for i in range(1, amount):
 		catalog = Catalog(name=f'Справочник_{i}')
@@ -182,6 +182,7 @@ from datetime import datetime
 sampleCFE.Version = '1.0.0.0+' + str(datetime.now())
 sampleCFE.Vendor = 'QuiteOldOrange'
 
+sampleCFE.ExtensionPurpose =  ExtensionPurpose.AddOn
 sampleCFE.Copyright = 'Олег Золотарев' 
 sampleCFE.VendorInformationAddress = 'ovzolotarev@gmail.com'
 sampleCFE.ConfigurationInformationAddress = 'https://github.com/OIegZolotarev/py_cfe_framework'
@@ -191,14 +192,14 @@ sampleCFE.DetailedInformation = 'Библиотека была написана 
 
 
 
-testCatalog(sampleCFE)
-testCommonCommand(sampleCFE)
-testCommonModule(sampleCFE)
-testHTTPService(sampleCFE)
-testConstant(sampleCFE)
-testDocument(sampleCFE)
-testDataProcessor(sampleCFE)
-testAccumulationRegister(sampleCFE)
+#testCatalog(sampleCFE)
+#testCommonCommand(sampleCFE)
+#testCommonModule(sampleCFE)
+#testHTTPService(sampleCFE)
+#testConstant(sampleCFE)
+#testDocument(sampleCFE)
+#testDataProcessor(sampleCFE)
+#testAccumulationRegister(sampleCFE)
 
 testMassCatalogs(sampleCFE)
 
