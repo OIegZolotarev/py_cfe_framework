@@ -26,8 +26,6 @@ def testMassCatalogs(cfg: Configuration, amount = 5000):
 		catalog = Catalog(name=f'Справочник_{i}')
 		catalog = cfg.registerObject(catalog)
 
-
-
 def testCatalog(cfg: Configuration,):
 
 	catalog = Catalog(name='Номенклатура')
@@ -172,7 +170,33 @@ def testAccumulationRegister(cfg: Configuration):
 	ar.ExtendedModules[ModuleKind.RecordSetModule] = f'// aaaa  2222 {ar}'
 
 	cfg.registerObject(ar)
+
+def testInformationRegister(cfg: Configuration):
     
+	ir = InformationRegister("Абырвалг")
+	ir.ExtendedConfigurationObject = 'b2bac7d5-6dba-40f3-91d4-dd31914418b4'
+
+	ir.ExtendedModules[ModuleKind.ManagerModule] = f'// aaaa {ir}'
+	ir.ExtendedModules[ModuleKind.RecordSetModule] = f'// aaaa  2222 {ir}'
+
+
+	form = ObjectForm("ФормаЭлемента")
+	form.ExtendedConfigurationObject = '9be54424-2c12-4c3d-a36c-8b1f1f254bc4'
+
+	form.ModuleText = f"""
+
+
+&НаСервере    
+&Вместо("ПриСозданииНаСервере")
+Процедура ЦАУ_ПриСозданииНаСервере(Отказ, СтандартнаяОбработка)
+	Сообщить("Модуль формы из генератора патчей {form}");
+	
+КонецПроцедуры
+
+
+"""
+	ir.Forms.append(form)
+	cfg.registerObject(ir)    
 
 sampleCFE.setLanguage(langName="Русский", langCode="ru")
 sampleCFE.setMainRole(roleName="ЦАУ_ОсновнаяРоль")
@@ -199,11 +223,12 @@ sampleCFE.DetailedInformation = 'Библиотека была написана 
 #testConstant(sampleCFE)
 #testDocument(sampleCFE)
 #testDataProcessor(sampleCFE)
-#testAccumulationRegister(sampleCFE)
+testAccumulationRegister(sampleCFE)
+testInformationRegister(sampleCFE)
 
-testMassCatalogs(sampleCFE)
+#testMassCatalogs(sampleCFE)
 
-z = zipfile.ZipFile("C:/temp/patch.zip", 'w')
+z = zipfile.ZipFile("/home/ozolotarev/patch.zip", 'w')
 sampleCFE.serialize(z)
 z.close()
 

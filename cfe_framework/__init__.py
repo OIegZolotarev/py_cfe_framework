@@ -15,3 +15,4 @@ from .mdclasses.language import Language
 from .mdclasses.modulekind import ModuleKind
 from .mdclasses.objectform import ObjectForm
 from .mdclasses.role import Role
+from .mdclasses.informationregister import InformationRegister
