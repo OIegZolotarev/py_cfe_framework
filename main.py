@@ -223,6 +223,28 @@ def testAccountingRegister(cfg: Configuration):
 
 	cfg.registerObject(ar)
 
+def testBusinessProcess(cfg: Configuration):
+
+	bp = BusinessProcess('Задание')
+	bp.ExtendedConfigurationObject = 'dad11c2e-08fc-4a6b-8829-8be6c64c15fc'
+
+	bp.ExtendedModules[ModuleKind.ObjectModule] = f' // Модуль сгенерирован {bp}'
+	cfg.registerObject(bp)
+
+def testEnum(cfg: Configuration):
+
+	enum = Enum('Задание')
+	enum.ExtendedConfigurationObject = '7ee0e29c-f6d2-4ac2-8d71-721dc1cd2ea6'
+
+	form = ObjectForm("ФормаЭлемента")	
+	form.ModuleText = "// Привет мир"
+
+	enum.Forms.append(form)
+
+	enum.ExtendedModules[ModuleKind.ManagerModule] = f' // Модуль сгенерирован {enum}'
+	cfg.registerObject(enum)
+
+
 sampleCFE.setLanguage(langName="Русский", langCode="ru")
 sampleCFE.setMainRole(roleName="ЦАУ_ОсновнаяРоль")
 sampleCFE.ConfigurationExtensionCompatibilityMode = ConfigurationExtensionCompatibilityMode.Version8_3_27
@@ -252,6 +274,8 @@ sampleCFE.DetailedInformation = 'Библиотека была написана 
 #testInformationRegister(sampleCFE)
 testReport(sampleCFE)
 testAccountingRegister(sampleCFE)
+testBusinessProcess(sampleCFE)
+testEnum(sampleCFE)
 
 
 #testMassCatalogs(sampleCFE)

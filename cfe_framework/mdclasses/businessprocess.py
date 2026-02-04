@@ -1,54 +1,51 @@
+import xml.etree.ElementTree as ET
+import cfe_framework.utils as utils
+
 from .typeproducing_object import TypeProducingObject
 
-import cfe_framework.utils as utils
-import xml.etree.ElementTree as ET
 
-
-class AccountingRegister(TypeProducingObject):
-
+class BusinessProcess(TypeProducingObject):
+    
     def __init__(self, name, synonym=None, id=None):
         super().__init__(name, synonym, id)
-        
-        types = ['Record', 'ExtDimensions', 'RecordSet', 'RecordKey', 'Selection', 'List', 'Manager']
-        self.declareGeneratedTypes(types)
-        
-        self.Correspondence = None
+
+        typeKinds = ['Object', 'Ref', 'Selection', 'List', 'Manager', 'RoutePointRef']
+        self.declareGeneratedTypes(typeKinds)
 
     def makeDescriptorXML(self):
 
         metaDataNode = ET.Element("MetaDataOBject")
-        accountingRegisterNode = ET.Element("AccountingRegister")
-        accountingRegisterNode.attrib['uuid'] = self.UUID
+        BusinessProcessNode = ET.Element("BusinessProcess")
+        BusinessProcessNode.attrib['uuid'] = self.UUID
 
         internalInfoNode = ET.Element("InternalInfo")
         self.generateInternalInfoBlock(internalInfoNode)
 
-        accountingRegisterNode.append(internalInfoNode)
+        BusinessProcessNode.append(internalInfoNode)
 
         propertiesNode = ET.Element("Properties")
         self.generateCommonProperties(propertiesNode)
-       
         
-        accountingRegisterNode.append(propertiesNode)
+        BusinessProcessNode.append(propertiesNode)
 
         childObjectsNode = ET.Element("ChildObjects")
         self.generateFormsDescriptors(childObjectsNode)
-        accountingRegisterNode.append(childObjectsNode)
+        BusinessProcessNode.append(childObjectsNode)
 
-        metaDataNode.append(accountingRegisterNode)
+        metaDataNode.append(BusinessProcessNode)
 
         return utils.writeDocumentToString(metaDataNode, True)
     
     def serialize(self, outputDirectory):
 
         descriptor = self.makeDescriptorXML()
-        descriptorFile = f'AccountingRegisters/{self.Name}.xml'
+        descriptorFile = f'BusinessProcesses/{self.Name}.xml'
 
-        extPath = f'AccountingRegisters/{self.Name}/Ext'
+        extPath = f'BusinessProcesses/{self.Name}/Ext'
 
         utils.saveText(descriptor, outputDirectory, descriptorFile)
 
         self.saveModules(outputDirectory, extPath)
 
-        formsPath = f'AccountingRegisters/{self.Name}/Forms'
+        formsPath = f'BusinessProcesses/{self.Name}/Forms'
         self.saveForms(outputDirectory, formsPath)            

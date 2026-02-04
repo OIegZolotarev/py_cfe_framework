@@ -1,54 +1,51 @@
+import xml.etree.ElementTree as ET
+import cfe_framework.utils as utils
+
 from .typeproducing_object import TypeProducingObject
 
-import cfe_framework.utils as utils
-import xml.etree.ElementTree as ET
 
-
-class AccountingRegister(TypeProducingObject):
-
+class Enum(TypeProducingObject):
+    
     def __init__(self, name, synonym=None, id=None):
         super().__init__(name, synonym, id)
-        
-        types = ['Record', 'ExtDimensions', 'RecordSet', 'RecordKey', 'Selection', 'List', 'Manager']
-        self.declareGeneratedTypes(types)
-        
-        self.Correspondence = None
+
+        typeKinds = ['Ref', 'List', 'Manager']
+        self.declareGeneratedTypes(typeKinds)
 
     def makeDescriptorXML(self):
 
         metaDataNode = ET.Element("MetaDataOBject")
-        accountingRegisterNode = ET.Element("AccountingRegister")
-        accountingRegisterNode.attrib['uuid'] = self.UUID
+        enumNode = ET.Element("Enum")
+        enumNode.attrib['uuid'] = self.UUID
 
         internalInfoNode = ET.Element("InternalInfo")
         self.generateInternalInfoBlock(internalInfoNode)
 
-        accountingRegisterNode.append(internalInfoNode)
+        enumNode.append(internalInfoNode)
 
         propertiesNode = ET.Element("Properties")
         self.generateCommonProperties(propertiesNode)
-       
         
-        accountingRegisterNode.append(propertiesNode)
+        enumNode.append(propertiesNode)
 
         childObjectsNode = ET.Element("ChildObjects")
         self.generateFormsDescriptors(childObjectsNode)
-        accountingRegisterNode.append(childObjectsNode)
+        enumNode.append(childObjectsNode)
 
-        metaDataNode.append(accountingRegisterNode)
+        metaDataNode.append(enumNode)
 
         return utils.writeDocumentToString(metaDataNode, True)
     
     def serialize(self, outputDirectory):
 
         descriptor = self.makeDescriptorXML()
-        descriptorFile = f'AccountingRegisters/{self.Name}.xml'
+        descriptorFile = f'Enums/{self.Name}.xml'
 
-        extPath = f'AccountingRegisters/{self.Name}/Ext'
+        extPath = f'Enums/{self.Name}/Ext'
 
         utils.saveText(descriptor, outputDirectory, descriptorFile)
 
         self.saveModules(outputDirectory, extPath)
 
-        formsPath = f'AccountingRegisters/{self.Name}/Forms'
+        formsPath = f'Enums/{self.Name}/Forms'
         self.saveForms(outputDirectory, formsPath)            
