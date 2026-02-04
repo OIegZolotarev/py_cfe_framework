@@ -161,7 +161,7 @@ def testDataProcessor(cfg: Configuration):
 
 	pass
 
-def testAccumulationRegister(cfg: Configuration):
+def testAccountingRegister(cfg: Configuration):
     
 	ar = AccumulationRegister("АвансовыеПлатежиИностранцевПоНДФЛ")
 	ar.ExtendedConfigurationObject = 'b2bac7d5-6dba-40f3-91d4-dd31914418b4'
@@ -198,6 +198,31 @@ def testInformationRegister(cfg: Configuration):
 	ir.Forms.append(form)
 	cfg.registerObject(ir)    
 
+def testReport(cfg: Configuration):
+
+	report = Report("ТестовыйОтчет")
+	
+
+	objectModuleText = f' // Модуль объекта {report}'
+	report.ExtendedModules[ModuleKind.ObjectModule] = objectModuleText
+
+	managerModuleText = f' // Модуль менеджера {report}'
+	report.ExtendedModules[ModuleKind.ManagerModule] = managerModuleText
+
+	cfg.registerObject(report)
+
+	pass
+
+def testAccountingRegister(cfg: Configuration):
+    
+	ar = AccountingRegister("Хозрасчетный")
+	
+	ar.ExtendedConfigurationObject = 'cc9a99f2-140b-4ae2-b025-20df4cdb7b63'
+	ar.ExtendedModules[ModuleKind.ManagerModule] = f'// ХЗ {ar}'
+	ar.ExtendedModules[ModuleKind.RecordSetModule] = f'// ХЗ  2222 {ar}'
+
+	cfg.registerObject(ar)
+
 sampleCFE.setLanguage(langName="Русский", langCode="ru")
 sampleCFE.setMainRole(roleName="ЦАУ_ОсновнаяРоль")
 sampleCFE.ConfigurationExtensionCompatibilityMode = ConfigurationExtensionCompatibilityMode.Version8_3_27
@@ -223,12 +248,15 @@ sampleCFE.DetailedInformation = 'Библиотека была написана 
 #testConstant(sampleCFE)
 #testDocument(sampleCFE)
 #testDataProcessor(sampleCFE)
-testAccumulationRegister(sampleCFE)
-testInformationRegister(sampleCFE)
+#testAccumulationRegister(sampleCFE)
+#testInformationRegister(sampleCFE)
+testReport(sampleCFE)
+testAccountingRegister(sampleCFE)
+
 
 #testMassCatalogs(sampleCFE)
 
-z = zipfile.ZipFile("/home/ozolotarev/patch.zip", 'w')
+z = zipfile.ZipFile("C:/temp/patch.zip", 'w')
 sampleCFE.serialize(z)
 z.close()
 

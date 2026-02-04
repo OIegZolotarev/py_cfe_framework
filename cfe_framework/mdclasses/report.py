@@ -1,28 +1,30 @@
-from .typeproducing_object import TypeProducingObject
-import cfe_framework.utils as utils
 import xml.etree.ElementTree as ET
+import cfe_framework.utils as utils
 
-class DataProcessor(TypeProducingObject):
-    
+from .typeproducing_object import TypeProducingObject
+
+
+class Report(TypeProducingObject):
+
     def __init__(self, name, synonym=None, id=None):
         super().__init__(name, synonym, id)
-        
+
         typeKinds = ['Object', 'Manager']
         self.declareGeneratedTypes(typeKinds)
 
-        
+
     def serialize(self, outputDirectoryOrArchive):
         
         descriptor = self.makeDescriptorXML()
-        descriptorFile = f'DataProcessors/{self.Name}.xml'
+        descriptorFile = f'Reports/{self.Name}.xml'
 
-        extPath = f'DataProcessors/{self.Name}/Ext'
+        extPath = f'Reports/{self.Name}/Ext'
 
         utils.saveText(descriptor, outputDirectoryOrArchive, descriptorFile)
 
         self.saveModules(outputDirectoryOrArchive, extPath)
         
-        formsPath = f'DataProcessors/{self.Name}/Forms'
+        formsPath = f'Reports/{self.Name}/Forms'
         self.saveForms(outputDirectoryOrArchive, formsPath)
         
         pass
@@ -30,7 +32,7 @@ class DataProcessor(TypeProducingObject):
     def makeDescriptorXML(self):
         
         metaDataNode = ET.Element("MetaDataOBject")
-        dataProcessorNode = ET.Element("DataProcessor")
+        dataProcessorNode = ET.Element("Report")
         dataProcessorNode.attrib['uuid'] = self.UUID
 
         internalInfoNode = ET.Element("InternalInfo")
